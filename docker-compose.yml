@@ -1,0 +1,19 @@
+version: "2"
+services:
+  rrweb-client:
+    image: node:12
+    command: bash -c "./wait-for-it.sh --timeout=0 mongodb:27017 && npm run dev"
+    ports:
+      - "3030:3030"
+    working_dir: /app
+    volumes:
+      - .:/app
+    depends_on:
+      - mongodb
+  mongodb:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: rrweb_client
+    volumes:
+      - ./data:/data/db
