@@ -14,7 +14,7 @@ const express = require('@feathersjs/express');
 const middleware = require('./middleware');
 const services = require('./services');
 const appHooks = require('./app.hooks');
-const channels = require('./channels');
+// const channels = require('./channels');
 
 const authentication = require('./authentication');
 
@@ -28,19 +28,17 @@ app.configure(configuration());
 app.use(helmet());
 app.use(cors());
 app.use(compress());
-app.use(express.json());
+app.use(express.json({ limit: '10 mb' }));
 app.use(express.urlencoded({ extended: true }));
 app.use(favicon(path.join(app.get('public'), 'favicon.ico')));
 // Host the public folder
 app.use('/', express.static(app.get('public')));
-app.use('/two/:sessionId', express.static(app.get('publictwo')));
+app.use('/session/:sessionId', express.static(app.get('player')));
 
 // Set up Plugins and providers
 app.configure(express.rest());
 
-
 app.configure(mongodb);
-
 
 // Configure other middleware (see `middleware/index.js`)
 app.configure(middleware);
@@ -48,7 +46,7 @@ app.configure(authentication);
 // Set up our services (see `services/index.js`)
 app.configure(services);
 // Set up event channels (see channels.js)
-app.configure(channels);
+// app.configure(channels);
 
 // Configure a middleware for 404s and the error handler
 app.use(express.notFound());

@@ -2,7 +2,7 @@
   "host": "localhost",
   "port": 3030,
   "public": "../public/",
-  "publictwo": "../public/test.html",
+  "player": "../public/web-player.html",
   "paginate": {
     "default": 10,
     "max": 50
